@@ -1,0 +1,16 @@
+.taskFormContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  form {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    .saveButton {
+      margin-top: 2rem;
+    }
+  }
+}

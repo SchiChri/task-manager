@@ -1,0 +1,19 @@
+mat-list-item {
+  &.finished {
+    color: lightgray;
+  }
+
+  &.firstOfDay {
+    border-top: 1px solid lightgray;
+  }
+
+  .priorityHIGH {
+    color: red;
+  }
+  .priorityMEDIUM {
+    color: orange;
+  }
+  .priorityLOW {
+    color: yellow;
+  }
+}

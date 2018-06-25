@@ -1,0 +1,22 @@
+<mat-toolbar>Task List</mat-toolbar>
+
+<mat-nav-list *ngIf="tasks && tasks.length > 0">
+  <mat-list-item *ngFor="let task of tasks; let i = index" (click)="itemClicked( $event, task )" [ngClass]="{ 'finished': task.isFinished(), 'firstOfDay': ( i > 0 && task.dueDate.getTime() !== tasks[ i-1 ].dueDate.getTime() ) }">
+    <h1 matLine [routerLink]="[ '/tasks/', task.id ]">{{ task.title }}</h1>
+    <span matLine>Due date: {{ task.dueDate | date: 'yyyy-MM-dd' }}</span>
+    <span matLine>Priority: <span [ngClass]="'priority' + Priority[ task.priority ]">{{ Priority[ task.priority ] }}</span></span>
+    <span matLine>Status: {{ Status[ task.status ] }}</span>
+    <mat-checkbox (click)="taskCheckboxClicked( $event, task )" [ngModel]="task.isFinished()"></mat-checkbox>
+  </mat-list-item>
+</mat-nav-list>
+
+  
+  <!-- Tasks could not be loaded -->
+<div *ngIf="tasks">
+  Could not load tasks.
+</div>
+
+  <!-- No tasks available -->
+<div *ngIf="tasks.length > 0">
+  No tasks available.
+</div>

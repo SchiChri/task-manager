@@ -1,0 +1,67 @@
+<mat-toolbar>Task Detail</mat-toolbar>
+
+<button mat-button [routerLink]="[ '/tasks' ]">&lt; Back to list</button>
+
+<!-- Known task id -->
+<div *ngIf="task && !invalidTaskId" class="taskFormContainer">
+  <form [formGroup]="taskForm" (ngSubmit)="updateTask( taskForm.value )" class="taskForm">
+
+    <!-- ID -->
+    <p>
+      Id: {{ task.id }}
+    </p>
+
+    <!-- Title -->
+    <mat-form-field>
+      <input matInput placeholder="Title" formControlName="title">
+      <mat-error *ngIf="!taskForm.controls.title.valid  && taskForm.controls.title.dirty && taskForm.controls.title.touched">Title can't be empty.</mat-error>
+    </mat-form-field>
+
+    <!-- Description -->
+    <mat-form-field>
+      <textarea matInput placeholder="Description" formControlName="description"></textarea>
+    </mat-form-field>
+
+    <!-- Priority -->
+    <mat-form-field>
+      <mat-select placeholder="Priority" formControlName="priority">
+        <mat-option *ngFor="let p of Priority | keys" [value]="Priority[ p ]">{{ p }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Due date -->
+    <mat-form-field>
+      <input matInput placeholder="Due date" formControlName="dueDate" [matDatepicker]="dueDatePicker">
+      <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker touchUi="true" #dueDatePicker></mat-datepicker>
+      <mat-error *ngIf="!taskForm.controls.dueDate.valid  && taskForm.controls.dueDate.dirty && taskForm.controls.dueDate.touched">Due date can't be empty.</mat-error>
+    </mat-form-field>
+
+    <!-- Status -->
+    <mat-form-field>
+      <mat-select placeholder="Status" formControlName="status">
+        <mat-option *ngFor="let s of Status | keys" [value]="Status[ s ]">{{ s }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Resloved at -->
+    <div *ngIf="task.isFinished()">
+      Resolved at: {{ task.resolvedAt | date: 'yyyy-MM-dd HH:mm' }}
+    </div>
+
+    <!-- Save button -->
+    <button mat-raised-button color="primary" [disabled]="!taskForm.valid || !taskForm.dirty" class="saveButton">
+      Save
+    </button>
+  </form>
+</div>
+
+<!-- Task with unknown id -->
+<div *ngIf="!task && !invalidTaskId">
+  Unknown task.
+</div>
+
+<!-- Task id is invalid (eg a string) -->
+<div *ngIf="invalidTaskId">
+  Invalid task id: {{ invalidTaskId }}
+</div>
