@@ -13,7 +13,7 @@ export class KeysPipe implements PipeTransform {
     let keys = [];
 
     for( let key in value ) {
-      if( !isNaN( parseInt( key ) ) ) {
+      if( !isNaN( parseInt( key, 10 ) ) ) {
         keys.push( value[ key ] );
       }
     }

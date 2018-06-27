@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 
@@ -11,13 +11,13 @@ import { Task, Priority, Status } from './../shared/task';
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.scss']
 })
-export class TaskListComponent implements OnInit {
+export class TaskListComponent implements OnInit, OnDestroy {
   // Make priority and status enums available in the template
   Priority = Priority;
   Status = Status;
 
   // all currently known tasks
-  private tasks: Task[];
+  public tasks: Task[];
 
   // subscription for tasks
   private taskSubscription: Subscription;
@@ -32,7 +32,7 @@ export class TaskListComponent implements OnInit {
     .subscribe( tasks => {
       this.tasks = tasks;
     }, error => {
-      console.log("error", error);
+      console.log( 'error', error );
     } );
   }
 

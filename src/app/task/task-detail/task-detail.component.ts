@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { FormBuilder, FormGroup, Validators, FormsModule, NgForm } from '@angular/forms';
@@ -20,9 +20,9 @@ export class TaskDetailComponent implements OnInit {
   private taskForm: FormGroup;
 
   // holds the invalid id if the url parameter is not a number
-  private invalidTaskId: string;
+  public invalidTaskId: string;
   // local copy of the displayed task
-  private task: Task;
+  public task: Task;
 
   constructor(
     private route: ActivatedRoute,
@@ -42,7 +42,7 @@ export class TaskDetailComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe( params => {
       if( params.taskId ) {
-        let taskId = parseInt( params.taskId );
+        let taskId = parseInt( params.taskId, 10 );
 
         if( taskId ) {
           this.taskService.getTask( taskId )
@@ -52,7 +52,7 @@ export class TaskDetailComponent implements OnInit {
               this.updateFormWithValue( task );
             }
           }, error => {
-            console.log("error", error);
+            console.log( 'error', error);
             this.task = null;
           } );
         } else {

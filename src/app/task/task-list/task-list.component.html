@@ -10,13 +10,13 @@
   </mat-list-item>
 </mat-nav-list>
 
-  
+
   <!-- Tasks could not be loaded -->
-<div *ngIf="tasks">
+<div *ngIf="!tasks">
   Could not load tasks.
 </div>
 
   <!-- No tasks available -->
-<div *ngIf="tasks.length > 0">
+<div *ngIf="tasks && tasks.length < 1">
   No tasks available.
 </div>

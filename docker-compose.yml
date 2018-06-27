@@ -1,0 +1,8 @@
+version: '3.5'
+
+services:
+    app:
+        image: 'task-manager'
+        build: '.'
+        ports:
+            - 3000:80

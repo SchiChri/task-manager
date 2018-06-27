@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { throwError } from 'rxjs';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/observable/of';
 import * as _ from 'lodash';
@@ -76,7 +77,7 @@ export class TaskService {
 
       return Observable.of( updatedTask );  // for mocking server
     } else {
-      throw Observable.throw( 'Unknown task' );
+      throwError( 'Unknown task' );
     }
   }
 
@@ -100,7 +101,7 @@ export class TaskService {
 
       return Observable.of( prevTask );  // for mocking server
     } else {
-      throw Observable.throw( 'Unknown task' );
+      throwError( 'Unknown task' );
     }
   }
 
@@ -108,7 +109,11 @@ export class TaskService {
    * Order the given tasks array by date and priority.
    */
   private orderTasks( tasks: Task[]): Task[] {
-    return _.orderBy( tasks, [ 'dueDate', 'status', 'priority' ], [ 'asc', 'asc', 'desc' ] );
+    return _.orderBy(
+      tasks,
+      [ 'dueDate', 'status', 'priority' ],
+      [ 'asc', 'asc', 'desc' ]
+    );
   }
 
 
@@ -128,7 +133,9 @@ export class TaskService {
         dueDate: '2018-06-22T00:00:00',
         resolvedAt: null,
         title: 'Finish Frontend Challenge',
-        description: 'Implement the frontend part of a simple task management system. Tasks are created at a randomly time-schedule and should become visible tu the UI.',
+        description: 'Implement the frontend part of a simple task management' +
+          ' system. Tasks are created at a randomly time-schedule and should ' +
+          'become visible tu the UI.',
         priority: 'HIGH',
         status: 'NEW'
       },
@@ -146,7 +153,8 @@ export class TaskService {
         dueDate: '2018-07-22T00:00:00',
         resolvedAt: null,
         title: 'Test task 3 with higher priority than 2',
-        description: 'Test task 3 description. Has higher priority than 2, but same time',
+        description: 'Test task 3 description. Has higher priority than 2, ' +
+          'but same time',
         priority: 'HIGH',
         status: 'NEW'
       },
@@ -155,7 +163,8 @@ export class TaskService {
         dueDate: '2018-07-22T00:00:00',
         resolvedAt: '2018-06-21T14:09:14',
         title: 'Test task 4 with higher priority than 2',
-        description: 'Test task 4 description. Has higher priority than 2, same time as 2 and 3, but is finished',
+        description: 'Test task 4 description. Has higher priority than 2, ' +
+          'same time as 2 and 3, but is finished',
         priority: 'HIGH',
         status: 'FINISHED'
       },
@@ -173,7 +182,8 @@ export class TaskService {
         dueDate: '2018-07-22T00:00:00',
         resolvedAt: null,
         title: 'Test task 6 with lower priority than 2 and 3',
-        description: 'Test task 6 description. Has lower priority than 2 and 3.',
+        description: 'Test task 6 description. Has lower priority than 2 and ' +
+          '3.',
         priority: 'LOW',
         status: 'IN_PROGRESS'
       }
@@ -222,7 +232,8 @@ export class TaskService {
       status: Status[ Math.floor( ( Math.random() * 3 ) + 1 ) ]
     } );
 
-    // if task is finished also set random resolved at timestamp within last 30 days
+    // if task is finished also set random resolved at timestamp within last 30
+    // days
     if( newTask.isFinished() ) {
       newTask.resolvedAt = new Date(
         Math.floor( new Date().getTime() ) -
