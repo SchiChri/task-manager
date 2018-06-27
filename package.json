@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "docker": "docker build -t task-manager . && docker run -d -p 3000:80 task-manager"
+    "docker": "docker build -t task-manager ."
   },
   "private": true,
   "dependencies": {
